@@ -60,3 +60,5 @@ Linux variants.
   TODO
 - figure out how to trigger Jenkins job from CLI  
   TODO
+- TODO  
+  TODO :)
