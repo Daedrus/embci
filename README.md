@@ -41,24 +41,14 @@ Linux variants.
 - enable SSH service (leave default for now, aka password based authentication)  
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
 - log in from laptop to Raspbery Pi 4 using SSH
-- create Dockerfile for Jenkins controller  
-  it should just have admin/admin as user  
-  https://hub.docker.com/r/jenkins/jenkins  
-  TODO
-- create Dockerfile for jenkins-agent  
-  agent should have rust and cargo installed  
-  https://hub.docker.com/r/jenkins/agent/  
-  TODO
-- use docker-compose to start both  
-  TODO
-- run cargo test in one of the aoc problems, have it run on the jenkins-agent  
-  define the job in the Jenkins GUI  
-  TODO
-- write Groovy job that runs cargo test in one of the aoc problems  
-  job should be included automatically when docker compose starts everything up  
-  there should be no need to create the job in the Jenkins GUI  
-  TODO
-- figure out how to trigger Jenkins job from CLI  
-  TODO
+- give up on Jenkins, Buildbot, GoCD  
+  Jenkins is too bulky and I don't really want to write Groovy  
+  I couldn't get Buildbot to work with docker-compose, their docs seem out of sync  
+  GoCD seems to have maintenance issues
+- try woodpecker-ci  
+  use docker-compose to create a gitea server, a woodpecker server and a woodpecker agent  
+  TODO how to skip gitea initial configuration?  
+  TODO how to create a repo and have it visible in gitea by default?
+- TODO write docker compose instructions
 - TODO  
   TODO :)

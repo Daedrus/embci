@@ -1,0 +1,66 @@
+version: '3'
+
+networks:
+  internal:
+    external: false
+
+services:
+  gitea:
+    image: gitea/gitea:latest
+    ports:
+      - 3000:3000
+    container_name: "gitea"
+    restart: "unless-stopped"
+    environment:
+      USER_UID: "1000"
+      USER_GID: "1000"
+      USER: "git"
+      GITEA__webhook__ALLOWED_HOST_LIST: "${IP_ADDRESS}"
+    volumes:
+      - gitea-data:/data:rw
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - "internal"
+
+  woodpecker-server:
+    image: woodpeckerci/woodpecker-server:next-alpine
+    ports:
+      - 8000:8000
+    container_name: "woodpecker-server"
+    environment:
+      - WOODPECKER_OPEN=true
+      - WOODPECKER_HOST=http://${IP_ADDRESS}:8000
+      - WOODPECKER_GITEA=true
+      - WOODPECKER_GITEA_URL=http://${IP_ADDRESS}:3000
+      - WOODPECKER_GITEA_CLIENT=${WOODPECKER_GITEA_CLIENT}
+      - WOODPECKER_GITEA_SECRET=${WOODPECKER_GITEA_SECRET}
+      - WOODPECKER_AGENT_SECRET=${WOODPECKER_AGENT_SECRET}
+      - WOODPECKER_LOG_LEVEL=debug
+    volumes:
+      - woodpecker-server-data:/var/lib/woodpecker/
+    networks:
+      - "internal"
+
+  woodpecker-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.woodpecker-agent
+    container_name: "woodpecker-agent"
+    command: agent
+    restart: always
+    depends_on:
+      - woodpecker-server
+    environment:
+      - WOODPECKER_BACKEND=local
+      - WOODPECKER_SERVER=woodpecker-server:9000
+      - WOODPECKER_AGENT_SECRET=${WOODPECKER_AGENT_SECRET}
+      - WOODPECKER_LOG_LEVEL=debug
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - "internal"
+
+volumes:
+  woodpecker-server-data:
+  gitea-data:

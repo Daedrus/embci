@@ -1,0 +1,16 @@
+FROM woodpeckerci/woodpecker-agent:next-alpine
+
+RUN apk add git git-lfs go
+
+WORKDIR /tmp
+RUN git clone --depth 1 --branch v2.0.3 https://github.com/woodpecker-ci/plugin-git.git
+
+WORKDIR /tmp/plugin-git
+ARG GOOS=linux
+ARG GOARCH=arm64
+ARG CGO_ENABLED=0
+ARG GO111MODULE=on
+RUN go build -v -a -tags netgo -o release/linux/arm64/plugin-git
+RUN cp release/linux/arm64/plugin-git /bin/plugin-git
+
+RUN apk del go
