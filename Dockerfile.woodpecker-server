@@ -1,0 +1,1 @@
+FROM woodpeckerci/woodpecker-server:next-alpine

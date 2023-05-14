@@ -1,0 +1,5 @@
+FROM gitea/gitea:latest
+
+# TODO Add embci user as admin by default
+
+# TODO Add OAuth App for Woodpecker Server by default

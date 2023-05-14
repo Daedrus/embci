@@ -6,7 +6,9 @@ networks:
 
 services:
   gitea:
-    image: gitea/gitea:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.gitea
     ports:
       - 3000:3000
     container_name: "gitea"
@@ -24,7 +26,9 @@ services:
       - "internal"
 
   woodpecker-server:
-    image: woodpeckerci/woodpecker-server:next-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.woodpecker-server
     ports:
       - 8000:8000
     container_name: "woodpecker-server"
