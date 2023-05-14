@@ -10,7 +10,8 @@ ARG GOOS=linux
 ARG GOARCH=arm64
 ARG CGO_ENABLED=0
 ARG GO111MODULE=on
-RUN go build -v -a -tags netgo -o release/linux/arm64/plugin-git
-RUN cp release/linux/arm64/plugin-git /bin/plugin-git
+RUN go build -v -a -tags netgo -o /bin/plugin-git
 
+WORKDIR /
 RUN apk del go
+RUN rm -rf /tmp/plugin-git
