@@ -1,1 +1,1 @@
-FROM woodpeckerci/woodpecker-server:next-alpine
+FROM woodpeckerci/woodpecker-server:next-6bf72cbeaf-alpine

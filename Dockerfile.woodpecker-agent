@@ -1,4 +1,4 @@
-FROM woodpeckerci/woodpecker-agent:next-alpine
+FROM woodpeckerci/woodpecker-agent:next-6bf72cbeaf-alpine
 
 RUN apk add git git-lfs go
 
