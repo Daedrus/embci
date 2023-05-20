@@ -50,6 +50,9 @@ RUN rustup self update
 RUN rustup update stable
 RUN rustup target add thumbv6m-none-eabi
 
+RUN cargo install sccache
+ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
+
 RUN apt-get install -y udev
 RUN wget https://probe.rs/files/69-probe-rs.rules -O /etc/udev/rules.d/69-probe-rs.rules
 
