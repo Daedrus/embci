@@ -50,7 +50,10 @@ RUN rustup self update
 RUN rustup update stable
 RUN rustup target add thumbv6m-none-eabi
 
-RUN cargo install probe-run
+RUN apt-get install -y udev
+RUN wget https://probe.rs/files/69-probe-rs.rules -O /etc/udev/rules.d/69-probe-rs.rules
+
+RUN cargo install cargo-flash
 
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
 ENTRYPOINT ["/bin/woodpecker-agent"]

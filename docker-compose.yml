@@ -53,6 +53,7 @@ services:
     container_name: "woodpecker-agent"
     command: agent
     restart: always
+    privileged: true
     depends_on:
       - woodpecker-server
     environment:
