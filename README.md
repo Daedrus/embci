@@ -5,9 +5,9 @@ This README currently functions as a journal to track my progress and ideas.
 
 ## Purpose
 To create a simple CI setup which will assist me when learning Embedded Rust.
-The aim is to use a [LattePanda 3 Delta](https://www.lattepanda.com/lattepan
-da-3-delta) as the CI server and connect it to a Raspberry Pi Pico and a Saleae
-logic analyzer.
+The aim is to use a [LattePanda 3 Delta](https://www.lattepanda.com/lattepanda-3-delta)
+as the CI server and connect it to a Raspberry Pi Pico and a Saleae logic
+analyzer.
 
 It should be possible to:
 * build embedded Rust source code
@@ -15,8 +15,7 @@ It should be possible to:
 * use Saleae's Automation API to run tests on the Pico
 
 Note: I initially wanted to use a Raspberry Pi 4 but Saleae's Logic [does not
-have binaries for ARM](https://support.saleae.com/faq/technical-faq/can-logic
--run-on-arm)
+have binaries for ARM](https://support.saleae.com/faq/technical-faq/can-logic-run-on-arm)
 
 ## Current approach
 I am running Ubuntu Desktop 22.04.2 LTS on the LattePanda and a dockerized
