@@ -32,10 +32,11 @@ Linux variants.
 - set up Ubuntu
 - install Docker Engine + docker-compose  
   https://docs.docker.com/engine/install/ubuntu/  
-  https://docs.docker.com/compose/install/linux/#install-using-the-repository
+- for convenience, make sure you can run Docker as a non-root user  
+  https://docs.docker.com/engine/install/linux-postinstall/
 - enable SSH service (leave default for now, aka password based authentication)  
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
-- log in from laptop to LattePanda using SSH
+- log in from own computer to LattePanda using SSH
 - give up on Jenkins, Buildbot, GoCD  
   Jenkins is too bulky and I don't really want to write Groovy  
   I couldn't get Buildbot to work with docker-compose, their docs seem out of sync  
