@@ -36,7 +36,8 @@ Linux variants.
   https://docs.docker.com/engine/install/linux-postinstall/
 - enable SSH service (leave default for now, aka password based authentication)  
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
-- log in from own computer to LattePanda using SSH
+- set up udev rules to detect the Raspberry Pi Debug Probe
+  https://probe.rs/docs/getting-started/probe-setup/
 - give up on Jenkins, Buildbot, GoCD  
   Jenkins is too bulky and I don't really want to write Groovy  
   I couldn't get Buildbot to work with docker-compose, their docs seem out of sync  
