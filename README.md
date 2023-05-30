@@ -27,25 +27,38 @@ Automation API can work without the Logic GUI. If things go well I might create
 Ansible provisioning scripts for the box so that I can experiment with other
 Linux variants.
 
-## Steps (so far)
+## Steps (TODO: clean up)
 - install Ubuntu Desktop 22.04.2 LTS
-- set up Ubuntu
+- set up Ubuntu (apt-get update, apt-get upgrade, etc.)
 - install Docker Engine + docker-compose  
-  https://docs.docker.com/engine/install/ubuntu/  
+  https://docs.docker.com/engine/install/ubuntu/
 - for convenience, make sure you can run Docker as a non-root user  
   https://docs.docker.com/engine/install/linux-postinstall/
 - enable SSH service (leave default for now, aka password based authentication)  
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
-- set up udev rules to detect the Raspberry Pi Debug Probe
+- set up udev rules to detect the Raspberry Pi Debug Probe  
   https://probe.rs/docs/getting-started/probe-setup/
-- give up on Jenkins, Buildbot, GoCD  
-  Jenkins is too bulky and I don't really want to write Groovy  
-  I couldn't get Buildbot to work with docker-compose, their docs seem out of sync  
-  GoCD seems to have maintenance issues
-- try woodpecker-ci  
-  use docker-compose to create a gitea server, a woodpecker server and a woodpecker agent  
-  TODO how to skip gitea initial configuration?  
-  TODO how to create a repo and have it visible in gitea by default?
-- TODO write docker compose instructions
-- TODO  
-  TODO :)
+- set up an environment variable containing the IP address  
+  `export IP_ADDRESS=192.168.0.104`
+- start the Gitea container
+  `docker compose up -d gitea`
+- access http://192.168.0.104:3000/ in your browser
+- configure the admin user in `Optional Settings` below then click
+  `Install Gitea`
+- go to http://192.168.0.104:3000/user/settings/applications and below in
+  `Manage OAuth2 Applications` choose:  
+  `Application Name: Woodpecker CI`  
+  `Redirect URI: http://192.168.0.107:8000/authorize`  
+  make sure that the `Confidential Client` checkbox is ticked and then click
+  `Create Application`  
+  copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`  
+  copy the `Client Secret` in the `WOODPECKER_GITEA_SECRET` variable in `.env`  
+  finally click `Save`
+- create an agent secret  
+  `openssl rand -base64 32`  
+  and add the output to the `WOODPECKER_AGENT_SECRET` variable in `.env`
+- start the Woodpecker server and agent containers
+  `docker compose up -d`
+- go back to Gitea, mirror the `https://github.com/Daedrus/embci-example-repo`
+  repository
+- add that repository to Woodpecker and run the pipeline
