@@ -15,12 +15,16 @@ RUN apt-get update && \
       libusb-1.0-0-dev \
       libftdi1-dev \
       libudev-dev \
-      libssl-dev
+      libssl-dev \
+      python3 \
+      python3-pip
 
+# Set up the Woodpecker Agent and the Git plugin
 COPY --from=woodpecker-agent /bin/woodpecker-agent /bin/woodpecker-agent
 COPY --from=woodpecker-agent /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=woodpecker-plugin-git /bin/plugin-git /bin/plugin-git
 
+# Set up the Rust environment
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
@@ -50,13 +54,23 @@ RUN rustup self update
 RUN rustup update stable
 RUN rustup target add thumbv6m-none-eabi
 
+# Speed up the builds by caching them
 RUN cargo install sccache
 ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
 
+# Make sure that the debug probes are set up in udev
+# Not sure if this is needed if we're running in privileged
+# mode and the host already has them set up
 RUN apt-get install -y udev
 RUN wget https://probe.rs/files/69-probe-rs.rules -O /etc/udev/rules.d/69-probe-rs.rules
 
 RUN cargo install cargo-flash
 
+# Set up the Saleae Logic2 application
+RUN cd /opt && wget https://logic2api.saleae.com/download?os=linux -O Logic2 && chmod +x Logic2
+RUN pip install logic2-automation
+RUN apt-get install -y xvfb libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libfuse2 libnss3 libasound2
+
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
-ENTRYPOINT ["/bin/woodpecker-agent"]
+COPY agent_startup.sh /bin/agent_startup.sh
+ENTRYPOINT ["/bin/agent_startup.sh"]
