@@ -27,17 +27,17 @@ Ansible provisioning scripts for the box so that I can experiment with other
 Linux variants.
 
 ## Steps (TODO: clean up and add pictures)
-- install Ubuntu Desktop 22.04.2 LTS
-- set up Ubuntu (apt-get update, apt-get upgrade, etc.)
-- install Docker Engine + docker-compose  
+- Install Ubuntu Desktop 22.04.2 LTS
+- Set up Ubuntu (apt-get update, apt-get upgrade, etc.)
+- Install Docker Engine + docker-compose  
   https://docs.docker.com/engine/install/ubuntu/
-- for convenience, make sure you can run Docker as a non-root user  
+- For convenience, make sure you can run Docker as a non-root user  
   https://docs.docker.com/engine/install/linux-postinstall/
-- enable SSH service (leave default for now, aka password based authentication)  
+- Enable SSH service (leave default for now, aka password based authentication)  
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
-- set up udev rules to handle the Raspberry Pi Debug Probe  
+- Set up udev rules to handle the Raspberry Pi Debug Probe  
   https://probe.rs/docs/getting-started/probe-setup/
-- set up udev rules to handle Saleae logic analyzers
+- Set up udev rules to handle Saleae logic analyzers
   ```
   embci@LattePanda:~/git/embci$ cat /etc/udev/rules.d/99-SaleaeLogic.rules
   # Saleae Logic Analyzer
@@ -52,29 +52,33 @@ Linux variants.
   SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1005", MODE="0666"
   SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1006", MODE="0666"
   ```
-- set up an environment variable containing the LattePanda's IP address,
+- Note that the Woodpecker agent is currently running in privileged mode
+  since I couldn't get it to work with the debug probe and the analyzer
+  otherwise. That is the reason why we need the above udev rules on the
+  LattePanda. I hope to fix this in the future.
+- Set up an environment variable containing the LattePanda's IP address,
   for example `export IP_ADDRESS=192.168.0.104`. This variable is used
   by `docker-compose.yml`. For the instructions below, replace `$IP_ADDRESS`
   with the IP address.
-- start the Gitea container
+- Start the Gitea container
   `docker compose up -d gitea`
-- access http://$IP_ADDRESS:3000/ in your browser
-- configure the admin user in `Optional Settings` below then click
+- Access http://$IP_ADDRESS:3000/ in your browser
+- Configure the admin user in `Optional Settings` below then click
   `Install Gitea`
-- go to http://$IP_ADDRESS:3000/user/settings/applications and below in
+- Go to http://$IP_ADDRESS:3000/user/settings/applications and below in
   `Manage OAuth2 Applications` choose:  
   `Application Name: Woodpecker CI`  
   `Redirect URI: http://$IP_ADDRESS:8000/authorize`  
-  make sure that the `Confidential Client` checkbox is ticked and then click
+  Make sure that the `Confidential Client` checkbox is ticked and then click
   `Create Application`  
-  copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`  
-  copy the `Client Secret` in the `WOODPECKER_GITEA_SECRET` variable in `.env`  
-  finally click `Save`
-- create an agent secret  
+  Copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`  
+  Copy the `Client Secret` in the `WOODPECKER_GITEA_SECRET` variable in `.env`  
+  Finally click `Save`
+- Create an agent secret  
   `openssl rand -base64 32`  
   and add the output to the `WOODPECKER_AGENT_SECRET` variable in `.env`
-- start the Woodpecker server and agent containers
+- Start the Woodpecker server and agent containers
   `docker compose up -d`
-- go back to Gitea, mirror the `https://github.com/Daedrus/embci-example-repo`
+- Go back to Gitea, mirror the `https://github.com/Daedrus/embci-example-repo`
   repository
-- add that repository to Woodpecker and run the pipeline
+- Add that repository to Woodpecker and run the pipeline
