@@ -26,7 +26,7 @@ Will switch to Ubuntu Server at some point. If things go well I might create
 Ansible provisioning scripts for the box so that I can experiment with other
 Linux variants.
 
-## Steps (TODO: clean up)
+## Steps (TODO: clean up and add pictures)
 - install Ubuntu Desktop 22.04.2 LTS
 - set up Ubuntu (apt-get update, apt-get upgrade, etc.)
 - install Docker Engine + docker-compose  
@@ -35,9 +35,9 @@ Linux variants.
   https://docs.docker.com/engine/install/linux-postinstall/
 - enable SSH service (leave default for now, aka password based authentication)  
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
-- set up udev rules to detect the Raspberry Pi Debug Probe  
+- set up udev rules to handle the Raspberry Pi Debug Probe  
   https://probe.rs/docs/getting-started/probe-setup/
-- set up udev rules to detect Saleae logic analyzers
+- set up udev rules to handle Saleae logic analyzers
   ```
   embci@LattePanda:~/git/embci$ cat /etc/udev/rules.d/99-SaleaeLogic.rules
   # Saleae Logic Analyzer
@@ -52,17 +52,19 @@ Linux variants.
   SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1005", MODE="0666"
   SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1006", MODE="0666"
   ```
-- set up an environment variable containing the LattePanda's IP address
-  `export IP_ADDRESS=192.168.0.104`
+- set up an environment variable containing the LattePanda's IP address,
+  for example `export IP_ADDRESS=192.168.0.104`. This variable is used
+  by `docker-compose.yml`. For the instructions below, replace `$IP_ADDRESS`
+  with the IP address.
 - start the Gitea container
   `docker compose up -d gitea`
-- access http://192.168.0.104:3000/ in your browser
+- access http://$IP_ADDRESS:3000/ in your browser
 - configure the admin user in `Optional Settings` below then click
   `Install Gitea`
-- go to http://192.168.0.104:3000/user/settings/applications and below in
+- go to http://$IP_ADDRESS:3000/user/settings/applications and below in
   `Manage OAuth2 Applications` choose:  
   `Application Name: Woodpecker CI`  
-  `Redirect URI: http://192.168.0.107:8000/authorize`  
+  `Redirect URI: http://$IP_ADDRESS:8000/authorize`  
   make sure that the `Confidential Client` checkbox is ticked and then click
   `Create Application`  
   copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`  
