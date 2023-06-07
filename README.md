@@ -19,11 +19,10 @@ have binaries for ARM](https://support.saleae.com/faq/technical-faq/can-logic-ru
 
 ## Current approach
 I am running Ubuntu Desktop 22.04.2 LTS on the LattePanda and a dockerized
-Jenkins controller + agent combo which get started by docker compose. Minimal
+Woodpecker server + agent combo which get started by docker compose. Minimal
 security to begin with, just get the ball rolling.
 
-Will switch to Ubuntu Server once I figure out the Jenkins CLI and see if Saleae
-Automation API can work without the Logic GUI. If things go well I might create
+Will switch to Ubuntu Server at some point. If things go well I might create
 Ansible provisioning scripts for the box so that I can experiment with other
 Linux variants.
 
@@ -38,7 +37,22 @@ Linux variants.
   https://ubuntuhandbook.org/index.php/2022/04/enable-ssh-ubuntu-22-04/
 - set up udev rules to detect the Raspberry Pi Debug Probe  
   https://probe.rs/docs/getting-started/probe-setup/
-- set up an environment variable containing the IP address  
+- set up udev rules to detect Saleae logic analyzers
+  ```
+  embci@LattePanda:~/git/embci$ cat /etc/udev/rules.d/99-SaleaeLogic.rules
+  # Saleae Logic Analyzer
+  # This file should be installed to /etc/udev/rules.d so that you can access the Logic hardware without being root
+  #
+  # type this at the command prompt: sudo cp 99-SaleaeLogic.rules /etc/udev/rules.d
+
+  SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0925", ATTR{idProduct}=="3881", MODE="0666"
+  SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1001", MODE="0666"
+  SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1003", MODE="0666"
+  SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1004", MODE="0666"
+  SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1005", MODE="0666"
+  SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1006", MODE="0666"
+  ```
+- set up an environment variable containing the LattePanda's IP address
   `export IP_ADDRESS=192.168.0.104`
 - start the Gitea container
   `docker compose up -d gitea`
