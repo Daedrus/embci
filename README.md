@@ -26,6 +26,14 @@ Will switch to Ubuntu Server at some point. If things go well I might create
 Ansible provisioning scripts for the box so that I can experiment with other
 Linux variants.
 
+## System diagram
+
+Note that currently only one Raspberry Pi Pico GPIO pin is connected to the
+Saleae Logic Analyzer. The plan is to extend the embci-example-repo program
+so that multiple connection types are tested (SPI, I2C, etc.).
+
+![embci](embci.png)
+
 ## Steps (TODO: clean up and add pictures)
 - Install Ubuntu Desktop 22.04.2 LTS
 - Set up Ubuntu (apt-get update, apt-get upgrade, etc.)
