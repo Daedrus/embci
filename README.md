@@ -90,3 +90,8 @@ so that multiple connection types are tested (SPI, I2C, etc.).
 - Go back to Gitea, mirror the `https://github.com/Daedrus/embci-example-repo`
   repository
 - Add that repository to Woodpecker and run the pipeline
+
+## Known Issues
+- The first run of `docker compose up -d` after a cold boot of the LattePanda
+  will not properly start the Logic analyzer so jobs that use it will fail.
+  The fix is to run `docker compose restart`.
