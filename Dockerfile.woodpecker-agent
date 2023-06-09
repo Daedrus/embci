@@ -70,6 +70,7 @@ RUN cargo install cargo-flash
 RUN cd /opt && wget https://logic2api.saleae.com/download?os=linux -O Logic2 && chmod +x Logic2
 RUN pip install logic2-automation
 RUN apt-get install -y xvfb libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libfuse2 libnss3 libasound2
+COPY 99-SaleaeLogic.rules /etc/udev/rules.d/99-SaleaeLogic.rules
 
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
 COPY agent_startup.sh /bin/agent_startup.sh

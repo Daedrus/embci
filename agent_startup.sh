@@ -4,7 +4,7 @@
 # https://docs.docker.com/config/containers/multi-service_container/
 
 # Start the Logic2 Automation API
-xvfb-run /opt/Logic2 --automation --no-sandbox --disable-gpu --headless &
+xvfb-run /opt/Logic2 --automation --no-sandbox --disable-gpu --headless > /tmp/saleae.log 2>&1 &
 
 # Start the Woodpecker Agent
 /bin/woodpecker-agent &
