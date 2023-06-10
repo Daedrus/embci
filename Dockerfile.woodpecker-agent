@@ -1,4 +1,4 @@
-FROM woodpeckerci/woodpecker-agent:next-e408c1ba27 as woodpecker-agent
+FROM woodpeckerci/woodpecker-agent:next-7bae68758f as woodpecker-agent
 FROM woodpeckerci/plugin-git:2.0.3 as woodpecker-plugin-git
 
 
