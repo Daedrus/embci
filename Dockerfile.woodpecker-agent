@@ -72,6 +72,9 @@ RUN pip install logic2-automation
 RUN apt-get install -y xvfb libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libfuse2 libnss3 libasound2
 COPY 99-SaleaeLogic.rules /etc/udev/rules.d/99-SaleaeLogic.rules
 
+RUN pip install pytest
+RUN pip install more-itertools
+
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
 COPY agent_startup.sh /bin/agent_startup.sh
 ENTRYPOINT ["/bin/agent_startup.sh"]
