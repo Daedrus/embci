@@ -1,6 +1,5 @@
-FROM woodpeckerci/woodpecker-agent:next-7bae68758f as woodpecker-agent
-FROM woodpeckerci/plugin-git:2.0.3 as woodpecker-plugin-git
-
+FROM woodpeckerci/woodpecker-agent:v1.0.2 as woodpecker-agent
+FROM woodpeckerci/plugin-git:2.1.1 as woodpecker-plugin-git
 
 FROM ubuntu:22.04
 
@@ -67,7 +66,7 @@ RUN wget https://probe.rs/files/69-probe-rs.rules -O /etc/udev/rules.d/69-probe-
 RUN cargo install cargo-flash
 
 # Set up the Saleae Logic2 application
-RUN cd /opt && wget https://logic2api.saleae.com/download?os=linux -O Logic2 && chmod +x Logic2
+RUN cd /opt && wget "https://logic2api.saleae.com/download?os=linux&arch=x64" -O Logic2 && chmod +x Logic2
 RUN pip install logic2-automation
 RUN apt-get install -y xvfb libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libfuse2 libnss3 libasound2
 COPY 99-SaleaeLogic.rules /etc/udev/rules.d/99-SaleaeLogic.rules
