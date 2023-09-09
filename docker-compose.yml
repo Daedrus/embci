@@ -61,6 +61,9 @@ services:
       - WOODPECKER_SERVER=woodpecker-server:9000
       - WOODPECKER_AGENT_SECRET=${WOODPECKER_AGENT_SECRET}
       - WOODPECKER_LOG_LEVEL=debug
+      - DEV_POWER_SUPPLY=${DEV_POWER_SUPPLY}
+      - DEBUG_PROBE_1_SERIAL=${DEBUG_PROBE_1_SERIAL}
+      - DEBUG_PROBE_2_SERIAL=${DEBUG_PROBE_2_SERIAL}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:

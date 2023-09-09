@@ -27,7 +27,7 @@ COPY --from=woodpecker-plugin-git /bin/plugin-git /bin/plugin-git
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.69.0
+    RUST_VERSION=1.72.0
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
@@ -57,22 +57,21 @@ RUN rustup target add thumbv6m-none-eabi
 RUN cargo install sccache
 ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
 
-# Make sure that the debug probes are set up in udev
-# Not sure if this is needed if we're running in privileged
-# mode and the host already has them set up
-RUN apt-get install -y udev
-RUN wget https://probe.rs/files/69-probe-rs.rules -O /etc/udev/rules.d/69-probe-rs.rules
-
+# Install tool for flashing the RPI targets
 RUN cargo install cargo-flash
 
 # Set up the Saleae Logic2 application
 RUN cd /opt && wget "https://logic2api.saleae.com/download?os=linux&arch=x64" -O Logic2 && chmod +x Logic2
-RUN pip install logic2-automation
+RUN pip3 install logic2-automation
 RUN apt-get install -y xvfb libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libfuse2 libnss3 libasound2
-COPY 99-SaleaeLogic.rules /etc/udev/rules.d/99-SaleaeLogic.rules
 
-RUN pip install pytest
-RUN pip install more-itertools
+# Install Python packages needed by the tests
+RUN pip3 install \
+      pytest \
+      more-itertools \
+      pyserial \
+      pyvisa \
+      pyvisa-py
 
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
 COPY agent_startup.sh /bin/agent_startup.sh
