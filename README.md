@@ -40,7 +40,7 @@ security to begin with, just to get the ball rolling.
   `docker compose up -d gitea`
 - Access http://$IP_ADDRESS:3000/ in your browser
 - Configure the admin user in `Optional Settings` then click `Install Gitea`
-- Go to http://$IP_ADDRESS:3000/user/settings/applications and in
+- Go to `http://$IP_ADDRESS:3000/user/settings/applications` and in
   `Manage OAuth2 Applications` choose:  
   `Application Name: Woodpecker CI`  
   `Redirect URI: http://$IP_ADDRESS:8000/authorize`  
@@ -58,4 +58,4 @@ security to begin with, just to get the ball rolling.
   repository
 - Add that repository to Woodpecker and run the pipeline
 - Things should work out of the box provided that your hardware setup is
-  similar to mine and (if different) you have made the correct changes.
+  similar to mine and (if different) you have made the necessary changes.
