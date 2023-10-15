@@ -1,7 +1,0 @@
-# Raspberry PI Debug Probes
-#
-# Note that these aren't used at all since `cargo flash` wants a VID:PID:Serial
-# combination to uniquely identify a probe
-
-SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000c", ATTRS{serial}=="E6614103E7826A24", MODE="0666", GROUP="plugdev", SYMLINK="ttyRPI1", TAG+="uaccess"
-SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000c", ATTRS{serial}=="E6614103E7246F25", MODE="0666", GROUP="plugdev", SYMLINK="ttyRPI2", TAG+="uaccess"
