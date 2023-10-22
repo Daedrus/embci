@@ -1,5 +1,5 @@
-FROM woodpeckerci/woodpecker-agent:v1.0.2 as woodpecker-agent
-FROM woodpeckerci/plugin-git:2.1.1 as woodpecker-plugin-git
+FROM woodpeckerci/woodpecker-agent:v1.0.3 as woodpecker-agent
+FROM woodpeckerci/plugin-git:2.2.0 as woodpecker-plugin-git
 
 FROM ubuntu:22.04
 
@@ -27,7 +27,7 @@ COPY --from=woodpecker-plugin-git /bin/plugin-git /bin/plugin-git
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.72.1
+    RUST_VERSION=1.73.0
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \

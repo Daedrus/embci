@@ -1,4 +1,4 @@
-FROM gitea/gitea:1.20.4
+FROM gitea/gitea:1.20.5
 
 # TODO Add embci user as admin by default
 
