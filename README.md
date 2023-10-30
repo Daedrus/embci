@@ -39,7 +39,7 @@ security to begin with, just to get the ball rolling.
 - Start the Gitea container
   `docker compose up -d gitea`
 - Access http://$IP_ADDRESS:3000/ in your browser
-- Configure the admin user in `Optional Settings` then click `Install Gitea`
+- Log in with embci/embci (the default admin user)
 - Go to `http://$IP_ADDRESS:3000/user/settings/applications` and in
   `Manage OAuth2 Applications` choose:  
   `Application Name: Woodpecker CI`  

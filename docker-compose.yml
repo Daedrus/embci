@@ -17,7 +17,11 @@ services:
       USER_UID: "1000"
       USER_GID: "1000"
       USER: "git"
+      GITEA__server__DOMAIN: "${IP_ADDRESS}"
+      GITEA__server__SSH_DOMAIN: "${IP_ADDRESS}"
+      GITEA__server__ROOT_URL: "http://${IP_ADDRESS}:3000/"
       GITEA__webhook__ALLOWED_HOST_LIST: "${IP_ADDRESS}"
+      GITEA__security__INSTALL_LOCK: "true"
     volumes:
       - gitea-data:/data:rw
       - /etc/timezone:/etc/timezone:ro
