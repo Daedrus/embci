@@ -1,4 +1,4 @@
-FROM woodpeckerci/woodpecker-agent:v1.0.3 as woodpecker-agent
+FROM woodpeckerci/woodpecker-agent:v1.0.5 as woodpecker-agent
 FROM woodpeckerci/plugin-git:2.2.0 as woodpecker-plugin-git
 
 FROM ubuntu:22.04
