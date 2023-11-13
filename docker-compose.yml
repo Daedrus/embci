@@ -68,11 +68,27 @@ services:
       - DEV_POWER_SUPPLY=${DEV_POWER_SUPPLY}
       - DEBUG_PROBE_1_SERIAL=${DEBUG_PROBE_1_SERIAL}
       - DEBUG_PROBE_2_SERIAL=${DEBUG_PROBE_2_SERIAL}
+      - MINIO_SERVER=minio:9000
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - "internal"
+
+  minio:
+    image: minio/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    container_name: "minio"
+    volumes:
+      - minio_storage:/data
+    command: server --console-address ":9001" /data
     networks:
       - "internal"
 
 volumes:
   woodpecker-server-data:
   gitea-data:
+  minio_storage:

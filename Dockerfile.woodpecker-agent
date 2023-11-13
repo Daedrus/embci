@@ -1,5 +1,6 @@
 FROM woodpeckerci/woodpecker-agent:v1.0.5 as woodpecker-agent
 FROM woodpeckerci/plugin-git:2.2.0 as woodpecker-plugin-git
+FROM woodpeckerci/plugin-s3:next as woodpecker-plugin-s3
 
 FROM ubuntu:22.04
 
@@ -22,6 +23,7 @@ RUN apt-get update && \
 COPY --from=woodpecker-agent /bin/woodpecker-agent /bin/woodpecker-agent
 COPY --from=woodpecker-agent /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=woodpecker-plugin-git /bin/plugin-git /bin/plugin-git
+COPY --from=woodpecker-plugin-s3 /bin/plugin-s3 /bin/plugin-s3
 
 # Set up the Rust environment
 ENV RUSTUP_HOME=/usr/local/rustup \

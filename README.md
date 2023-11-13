@@ -29,16 +29,21 @@ security to begin with, just to get the ball rolling.
 - Install NixOS 23.05 and use the `configuration.nix` file from my `configfiles`
   [repository](https://github.com/Daedrus/configfiles) together with the
   `embci.nix` file from this repository.
-- Note that the Woodpecker agent is currently running in privileged mode
-  since I couldn't get it to work with the debug probe and the analyzer
-  otherwise. I hope to fix this in the future.
-- Set up an environment variable containing the LattePanda's IP address,
-  for example `export IP_ADDRESS=192.168.0.104`. This variable is used
+- Clone this repository
+- Configure the LattePanda's IP address in `.env`. This variable is used
   by `docker-compose.yml`. For the instructions below, replace `$IP_ADDRESS`
   with the IP address.
+- Configure the debug probes' serial numbers in `.env`
+- Start the MinIO container
+  `docker compose up -d minio`
+- Access `http://$IP_ADDRESS:9001/` in your browser
+- Log in with minioadmin/minioadmin (the default admin user)
+- Create an access key and copy the results in the `MINIO_ACCESS_KEY` and
+  `MINIO_SECRET_KEY` variables in `.env`
+- Create a bucket called `embci-artifacts`
 - Start the Gitea container
   `docker compose up -d gitea`
-- Access http://$IP_ADDRESS:3000/ in your browser
+- Access `http://$IP_ADDRESS:3000/` in your browser
 - Log in with embci/embci (the default admin user)
 - Go to `http://$IP_ADDRESS:3000/user/settings/applications` and in
   `Manage OAuth2 Applications` choose:  
@@ -57,5 +62,8 @@ security to begin with, just to get the ball rolling.
 - Go back to Gitea, mirror the `https://github.com/Daedrus/embci-example-repo`
   repository
 - Add that repository to Woodpecker and run the pipeline
+- Note that the Woodpecker agent is currently running in privileged mode
+  since I couldn't get it to work with the debug probe and the analyzer
+  otherwise. I hope to fix this in the future.
 - Things should work out of the box provided that your hardware setup is
-  similar to mine and (if different) you have made the necessary changes.
+  similar to mine or, if different, you have made the necessary changes.
