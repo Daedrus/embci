@@ -1,7 +1,7 @@
 FROM gitea/gitea:1.20.5
 
-COPY gitea_startup.sh /setup/
-ENTRYPOINT ["/setup/gitea_startup.sh"]
+COPY startup.sh /setup/
+ENTRYPOINT ["/setup/startup.sh"]
 
 # TODO Add OAuth App for Woodpecker Server by default
 # Not currently possible according to

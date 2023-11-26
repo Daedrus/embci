@@ -76,5 +76,5 @@ RUN pip3 install \
       pyvisa-py
 
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
-COPY agent_startup.sh /bin/agent_startup.sh
-ENTRYPOINT ["/bin/agent_startup.sh"]
+COPY startup.sh /bin/startup.sh
+ENTRYPOINT ["/bin/startup.sh"]

@@ -7,8 +7,7 @@ networks:
 services:
   gitea:
     build:
-      context: .
-      dockerfile: Dockerfile.gitea
+      context: gitea
     ports:
       - 3000:3000
     container_name: "gitea"
@@ -31,8 +30,7 @@ services:
 
   woodpecker-server:
     build:
-      context: .
-      dockerfile: Dockerfile.woodpecker-server
+      context: woodpecker-server
     ports:
       - 8000:8000
     container_name: "woodpecker-server"
@@ -52,8 +50,7 @@ services:
 
   woodpecker-agent:
     build:
-      context: .
-      dockerfile: Dockerfile.woodpecker-agent
+      context: woodpecker-agent
     container_name: "woodpecker-agent"
     command: agent
     restart: always
@@ -79,8 +76,7 @@ services:
 
   minio:
     build:
-      context: .
-      dockerfile: Dockerfile.minio
+      context: minio
     ports:
       - 9000:9000
       - 9001:9001
