@@ -6,3 +6,5 @@ COPY --from=mc /usr/bin/mc /usr/bin/mc
 COPY startup.sh /usr/bin/startup.sh
 
 ENTRYPOINT ["/usr/bin/startup.sh"]
+
+# TODO Add access keys automatically
