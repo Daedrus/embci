@@ -5,6 +5,7 @@ This README currently functions as a journal to track my progress and ideas.
 
 ## Purpose
 To create a simple CI setup which will assist me when learning Embedded Rust.
+
 The aim is to use a [LattePanda 3 Delta](https://www.lattepanda.com/lattepanda-3-delta)
 as the CI server and connect it to two Raspberry Pi Picos and a Saleae logic
 analyzer.
@@ -18,9 +19,15 @@ Note: I initially wanted to use a Raspberry Pi 4 but Saleae's Logic [does not
 have binaries for ARM](https://support.saleae.com/faq/technical-faq/can-logic-run-on-arm)
 
 ## Current approach
-I am running [NixOS](https://nixos.org/) on the LattePanda and a dockerized
-Woodpecker server + agent combo which get started by docker compose. Minimal
-security to begin with, just to get the ball rolling.
+I am running [NixOS](https://nixos.org/) on the LattePanda and the following
+dockerized applications:
+- [Gitea](https://about.gitea.com/) for Git repository management
+- [Woodpecker](https://woodpecker-ci.org/) as a CI engine
+- [MinIO](https://min.io/) for artifact storage
+
+Use [Docker Compose](https://docs.docker.com/compose/) to run the above.
+
+Minimal security to begin with, just to get the ball rolling.
 
 ## System diagram
 ![embci](embci.png)
