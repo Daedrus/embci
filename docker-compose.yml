@@ -60,6 +60,7 @@ services:
     privileged: true
     depends_on:
       - woodpecker-server
+      - minio
     environment:
       - WOODPECKER_BACKEND=local
       - WOODPECKER_SERVER=woodpecker-server:9000
@@ -77,7 +78,9 @@ services:
       - "internal"
 
   minio:
-    image: minio/minio
+    build:
+      context: .
+      dockerfile: Dockerfile.minio
     ports:
       - 9000:9000
       - 9001:9001
