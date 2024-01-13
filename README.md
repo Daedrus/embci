@@ -33,7 +33,7 @@ Minimal security to begin with, just to get the ball rolling.
 ![embci](embci.png)
 
 ## Steps
-- Install NixOS 23.05 and use the `configuration.nix` file from my `configfiles`
+- Install NixOS 23.11 and use the `configuration.nix` file from my `configfiles`
   [repository](https://github.com/Daedrus/configfiles) together with the
   `embci.nix` file from this repository.
 - Clone this repository
@@ -47,7 +47,6 @@ Minimal security to begin with, just to get the ball rolling.
 - Log in with minioadmin/minioadmin (the default admin user)
 - Create an access key and copy the results in the `MINIO_ACCESS_KEY` and
   `MINIO_SECRET_KEY` variables in `.env`
-- Create a bucket called `embci-artifacts`
 - Start the Gitea container
   `docker compose up -d gitea`
 - Access `http://$IP_ADDRESS:3000/` in your browser
@@ -61,16 +60,26 @@ Minimal security to begin with, just to get the ball rolling.
   Copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`  
   Copy the `Client Secret` in the `WOODPECKER_GITEA_SECRET` variable in `.env`  
   Finally click `Save`
+- Clone the `https://github.com/Daedrus/embci-example-repo` repository by
+  clicking the + button in the top-right and choosing `New Migration` ->
+  `Github`
 - Create an agent secret  
   `openssl rand -base64 32`  
   and add the output to the `WOODPECKER_AGENT_SECRET` variable in `.env`
-- Start the Woodpecker server and agent containers
+- Stop MinIO and Gitea
+  `docker compose stop`
+- Configure `DEV_POWER_SUPPLY` in `.env` (it could be a `ttyACM` for example
+  but it depends entirely on your power supply)
+- All of the variables in `.env` should be set (none of them should be set
+  to CHANGEME anymore)
+- Start all containers
   `docker compose up -d`
-- Go back to Gitea, mirror the `https://github.com/Daedrus/embci-example-repo`
-  repository
-- Add that repository to Woodpecker and run the pipeline
+- Access `http://$IP_ADDRESS:8000/` in your browser
+- Log in with embci/embci (the default admin user)
+- It should ask to confirm the authentication
+- Add the `embci-example-repo` repository to Woodpecker and run the pipeline
+- Things should work out of the box provided that your hardware setup is
+  similar to mine or, if different, you have made the necessary changes.
 - Note that the Woodpecker agent is currently running in privileged mode
   since I couldn't get it to work with the debug probe and the analyzer
   otherwise. I hope to fix this in the future.
-- Things should work out of the box provided that your hardware setup is
-  similar to mine or, if different, you have made the necessary changes.

@@ -1,4 +1,4 @@
-FROM woodpeckerci/woodpecker-agent:v2.0.0 as woodpecker-agent
+FROM woodpeckerci/woodpecker-agent:v2.1.1 as woodpecker-agent
 FROM woodpeckerci/plugin-git:2.4.0 as woodpecker-plugin-git
 FROM woodpeckerci/plugin-s3:next as woodpecker-plugin-s3
 
@@ -29,7 +29,7 @@ COPY --from=woodpecker-plugin-s3 /bin/plugin-s3 /bin/plugin-s3
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.74.0
+    RUST_VERSION=1.75.0
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
