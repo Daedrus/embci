@@ -68,8 +68,6 @@ Minimal security to begin with, just to get the ball rolling.
   and add the output to the `WOODPECKER_AGENT_SECRET` variable in `.env`
 - Stop MinIO and Gitea
   `docker compose stop`
-- Configure `DEV_POWER_SUPPLY` in `.env` (it could be a `ttyACM` for example
-  but it depends entirely on your power supply)
 - All of the variables in `.env` should be set (none of them should be set
   to CHANGEME anymore)
 - Start all containers

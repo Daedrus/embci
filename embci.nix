@@ -15,7 +15,9 @@
 
   services.udev.extraRules = ''
     # RND 320-KA3305P Power Supply
-    SUBSYSTEM=="tty", ATTRS{idVendor}=="0416", ATTRS{idProduct}=="5011", MODE="0666", GROUP="dialout", SYMLINK="ttyPowerSupply"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="0416", ATTRS{idProduct}=="5011", ACTION=="add", RUN+="${pkgs.coreutils}/bin/rm -f /dev/ttyPowerSupply"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="0416", ATTRS{idProduct}=="5011", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/ln `${pkgs.coreutils}/bin/realpath /dev/serial/by-id/usb-Nuvoton_USB_Virtual_COM_00320B0E0454-if00` /dev/ttyPowerSupply'"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="0416", ATTRS{idProduct}=="5011", ACTION=="remove", RUN+="${pkgs.coreutils}/bin/rm -f /dev/ttyPowerSupply"
 
     # Raspberry PI Debug Probes
     #
