@@ -29,7 +29,7 @@ COPY --from=woodpecker-plugin-s3 /bin/plugin-s3 /bin/plugin-s3
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.75.0
+    RUST_VERSION=1.76.0
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
