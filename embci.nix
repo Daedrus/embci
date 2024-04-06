@@ -3,11 +3,20 @@
 {
   environment.systemPackages = with pkgs; [
     rustup
+    probe-rs
     openssl
     usbutils
     docker
     docker-compose
     saleae-logic-2
+    (python311.withPackages (ppkgs: [
+      ppkgs.pytest
+      ppkgs.more-itertools
+      ppkgs.pyserial
+      ppkgs.pyvisa
+      ppkgs.pyvisa-py
+      # TODO ppkgs.logic2-automation
+    ]))
   ];
 
   virtualisation.docker.enable = true;
