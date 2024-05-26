@@ -7,13 +7,13 @@ This README currently functions as a journal to track my progress and ideas.
 To create a simple CI setup which will assist me when learning Embedded Rust.
 
 The aim is to use a [LattePanda 3 Delta](https://www.lattepanda.com/lattepanda-3-delta)
-as the CI server and connect it to two Raspberry Pi Picos and a Saleae logic
+as the CI server and connect it to a Raspberry Pi Pico and a Saleae logic
 analyzer.
 
 It should be possible to:
 * build embedded Rust source code
-* flash it to either Raspberry Pi Pico
-* use Saleae's Automation API to run tests on the Picos
+* flash it to the Raspberry Pi Pico
+* use Saleae's Automation API to run tests on the Pico
 
 Note: I initially wanted to use a Raspberry Pi 4 but Saleae's Logic [does not
 have binaries for ARM](https://support.saleae.com/faq/technical-faq/can-logic-run-on-arm)
@@ -40,7 +40,7 @@ Minimal security to begin with, just to get the ball rolling.
 - Configure the LattePanda's IP address in `.env`. This variable is used
   by `docker-compose.yml`. For the instructions below, replace `$IP_ADDRESS`
   with the IP address.
-- Configure the debug probes' serial numbers in `.env`
+- Configure the debug probe serial number in `.env`
 - Start the MinIO container
   `docker compose up -d minio`
 - Access `http://$IP_ADDRESS:9001/` in your browser
