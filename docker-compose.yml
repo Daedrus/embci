@@ -11,7 +11,6 @@ services:
     ports:
       - 3000:3000
     container_name: "gitea"
-    restart: "unless-stopped"
     environment:
       USER_UID: "1000"
       USER_GID: "1000"
@@ -53,7 +52,6 @@ services:
       context: woodpecker-agent
     container_name: "woodpecker-agent"
     command: agent
-    restart: always
     privileged: true
     depends_on:
       - woodpecker-server
