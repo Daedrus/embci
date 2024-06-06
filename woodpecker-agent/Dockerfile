@@ -1,4 +1,4 @@
-FROM woodpeckerci/woodpecker-agent:v2.4.1 as woodpecker-agent
+FROM woodpeckerci/woodpecker-agent:v2.5.0 as woodpecker-agent
 FROM woodpeckerci/plugin-git:2.5.0 as woodpecker-plugin-git
 FROM woodpeckerci/plugin-s3:next as woodpecker-plugin-s3
 
@@ -17,7 +17,8 @@ RUN apt-get update && \
       libudev-dev \
       libssl-dev \
       python3 \
-      python3-pip
+      python3-pip \
+      cmake
 
 # Set up the Woodpecker Agent and the Git plugin
 COPY --from=woodpecker-agent /bin/woodpecker-agent /bin/woodpecker-agent
@@ -60,7 +61,7 @@ RUN cargo install sccache
 ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
 
 # Install tool for flashing the RPI targets
-RUN cargo install cargo-flash
+RUN cargo install probe-rs-tools
 
 # Set up the Saleae Logic2 application
 RUN cd /opt && wget "https://logic2api.saleae.com/download?os=linux&arch=x64" -O Logic2 && chmod +x Logic2

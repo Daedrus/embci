@@ -1,4 +1,4 @@
-FROM gitea/gitea:1.21.11
+FROM gitea/gitea:1.22.0
 
 COPY startup.sh /setup/
 ENTRYPOINT ["/setup/startup.sh"]
