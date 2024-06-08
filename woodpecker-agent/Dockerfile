@@ -5,7 +5,7 @@ FROM woodpeckerci/plugin-s3:next as woodpecker-plugin-s3
 FROM ubuntu:22.04
 
 RUN apt-get update && \
-    apt-get install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
       git \
       git-lfs \
       gcc \
@@ -17,8 +17,16 @@ RUN apt-get update && \
       libudev-dev \
       libssl-dev \
       python3 \
-      python3-pip \
-      cmake
+      pipx \
+      # Saleae Logic2 dependencies
+      xvfb \
+      libatk1.0-0 \
+      libatk-bridge2.0-0 \
+      libgtk-3-0 \
+      libgbm1 \
+      libfuse2 \
+      libnss3 \
+      libasound2
 
 # Set up the Woodpecker Agent and the Git plugin
 COPY --from=woodpecker-agent /bin/woodpecker-agent /bin/woodpecker-agent
@@ -56,25 +64,22 @@ RUN rustup self update
 RUN rustup update stable
 RUN rustup target add thumbv6m-none-eabi
 
-# Speed up the builds by caching them
-RUN cargo install sccache
-ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
+# Install tool for installing Rust binaries
+RUN wget -O- "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-gnu.tgz" | tar -xvz -C /usr/local/cargo/bin
 
 # Install tool for flashing the RPI targets
-RUN cargo install probe-rs-tools
+RUN cargo binstall --no-confirm probe-rs-tools
+
+# Speed up the builds by caching them
+RUN cargo binstall --no-confirm sccache
+ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
 
 # Set up the Saleae Logic2 application
 RUN cd /opt && wget "https://logic2api.saleae.com/download?os=linux&arch=x64" -O Logic2 && chmod +x Logic2
-RUN pip3 install logic2-automation
-RUN apt-get install -y xvfb libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libfuse2 libnss3 libasound2
 
-# Install Python packages needed by the tests
-RUN pip3 install \
-      pytest \
-      more-itertools \
-      pyserial \
-      pyvisa \
-      pyvisa-py
+# Install Poetry for Python dependency management
+RUN pipx install poetry
+ENV PATH=$PATH:/root/.local/bin
 
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
 COPY startup.sh /bin/startup.sh
