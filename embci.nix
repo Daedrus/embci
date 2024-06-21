@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  users.users.embci = {
+    isNormalUser = true;
+    description = "embci";
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+  };
+
   environment.systemPackages = with pkgs; [
     rustup
     probe-rs
@@ -9,6 +15,7 @@
     docker
     docker-compose
     saleae-logic-2
+    poetry
     (let logic2_automation = python311.pkgs.buildPythonPackage rec {
       version = "1.0.7";
       pname = "logic2_automation";
