@@ -33,7 +33,7 @@ Minimal security to begin with, just to get the ball rolling.
 ![embci](embci.png)
 
 ## Steps
-- Install NixOS 23.11 and use the `configuration.nix` file from my `configfiles`
+- Install NixOS and use the `configuration.nix` file from my `configfiles`
   [repository](https://github.com/Daedrus/configfiles) together with the
   `embci.nix` file from this repository.
 - Clone this repository
