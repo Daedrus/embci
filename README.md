@@ -52,19 +52,19 @@ Minimal security to begin with, just to get the ball rolling.
 - Access `http://$IP_ADDRESS:3000/` in your browser
 - Log in with embci/embci (the default admin user)
 - Go to `http://$IP_ADDRESS:3000/user/settings/applications` and in
-  `Manage OAuth2 Applications` choose:  
-  `Application Name: Woodpecker CI`  
-  `Redirect URI: http://$IP_ADDRESS:8000/authorize`  
+  `Manage OAuth2 Applications` choose:
+  `Application Name: Woodpecker CI`
+  `Redirect URI: http://$IP_ADDRESS:8000/authorize`
   Make sure that the `Confidential Client` checkbox is ticked and then click
-  `Create Application`  
-  Copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`  
-  Copy the `Client Secret` in the `WOODPECKER_GITEA_SECRET` variable in `.env`  
+  `Create Application`
+  Copy the `Client ID` in the `WOODPECKER_GITEA_CLIENT` variable in `.env`
+  Copy the `Client Secret` in the `WOODPECKER_GITEA_SECRET` variable in `.env`
   Finally click `Save`
 - Clone the `https://github.com/Daedrus/embci-example-repo` repository by
   clicking the + button in the top-right and choosing `New Migration` ->
   `Github`
-- Create an agent secret  
-  `openssl rand -base64 32`  
+- Create an agent secret
+  `openssl rand -base64 32`
   and add the output to the `WOODPECKER_AGENT_SECRET` variable in `.env`
 - Stop MinIO and Gitea
   `docker compose stop`
