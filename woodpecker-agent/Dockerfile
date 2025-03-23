@@ -16,8 +16,6 @@ RUN apt-get update && \
       libftdi1-dev \
       libudev-dev \
       libssl-dev \
-      python3 \
-      pipx \
       # Saleae Logic2 dependencies
       xvfb \
       libatk1.0-0 \
@@ -77,9 +75,8 @@ ENV RUSTC_WRAPPER=/usr/local/cargo/bin/sccache
 # Set up the Saleae Logic2 application
 RUN cd /opt && wget "https://downloads.saleae.com/logic2/Logic-2.4.13-linux-x64.AppImage" -O Logic2 && chmod +x Logic2
 
-# Install Poetry for Python dependency management
-RUN pipx install poetry
-ENV PATH=$PATH:/root/.local/bin
+# Install uv for managing Python
+COPY --from=ghcr.io/astral-sh/uv:0.6.9 /uv /uvx /bin/
 
 HEALTHCHECK CMD ["/bin/woodpecker-agent", "ping"]
 COPY startup.sh /bin/startup.sh

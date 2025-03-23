@@ -15,30 +15,7 @@
     docker
     docker-compose
     saleae-logic-2
-    poetry
-    (let logic2_automation = python311.pkgs.buildPythonPackage rec {
-      version = "1.0.7";
-      pname = "logic2_automation";
-      format = "pyproject";
-      propagatedBuildInputs = [
-        python311Packages.hatchling
-        python311Packages.grpcio
-        python311Packages.grpcio-tools
-        python311Packages.protobuf
-      ];
-      src = fetchPypi {
-        inherit pname version;
-        sha256 = "9N5nuL/6VnVBM+r2F1sAyOGgeEizi+efX9fsmeBsxyg=";
-      };
-    };
-    in python311.withPackages (ppkgs: [
-      logic2_automation
-      ppkgs.pytest
-      ppkgs.more-itertools
-      ppkgs.pyserial
-      ppkgs.pyvisa
-      ppkgs.pyvisa-py
-    ]))
+    uv
   ];
 
   virtualisation.docker.enable = true;
