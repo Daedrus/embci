@@ -1,1 +1,1 @@
-FROM woodpeckerci/woodpecker-server:v2.6.0-alpine
+FROM woodpeckerci/woodpecker-server:v3.4.0-alpine
