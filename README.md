@@ -68,6 +68,8 @@ Minimal security to begin with, just to get the ball rolling.
   and add the output to the `WOODPECKER_AGENT_SECRET` variable in `.env`
 - Stop MinIO and Gitea
   `docker compose stop`
+- Run `probe-rs list` to get the ID of your debug probe and add the output
+  to the `DEBUG_PROBE_1_SERIAL` variable in `.env`
 - All of the variables in `.env` should be set (none of them should be set
   to CHANGEME anymore)
 - Start all containers
