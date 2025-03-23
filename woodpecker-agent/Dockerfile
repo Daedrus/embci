@@ -1,6 +1,6 @@
-FROM woodpeckerci/woodpecker-agent:v3.4.0 as woodpecker-agent
-FROM woodpeckerci/plugin-git:2.6.2 as woodpecker-plugin-git
-FROM woodpeckerci/plugin-s3:1.3.2 as woodpecker-plugin-s3
+FROM woodpeckerci/woodpecker-agent:v3.4.0 AS woodpecker-agent
+FROM woodpeckerci/plugin-git:2.6.2 AS woodpecker-plugin-git
+FROM woodpeckerci/plugin-s3:1.3.2 AS woodpecker-plugin-s3
 
 FROM ubuntu:22.04
 
